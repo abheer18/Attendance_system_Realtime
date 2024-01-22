@@ -9,7 +9,7 @@ firebase_admin.initialize_app(cred, {
 ref = db.reference('Students')
 
 data = {
-    "1001":
+    "1002":
         {
             "Name" : "Abheer Raj Mehrotra",
             "Major" : "Machine Learning",
@@ -19,7 +19,7 @@ data = {
             "Year" : "4",
             "last_Attendance_Time" : "2024-01-14 00:54:32"
         },
-    "1002":
+    "1001":
         {
             "Name" : "Sundar Pichai",
             "Major" : "Semi Conductor",
@@ -37,6 +37,26 @@ data = {
             "total_attendance" : 15,
             "Standing" : "G",
             "Year" : "4",
+            "last_Attendance_Time" : "2024-01-16 00:54:32"
+        },
+    "1004":
+        {
+            "Name" : "Aditya Sharma",
+            "Major" : "Android",
+            "Starting Year" : 2021,
+            "total_attendance" : 12,
+            "Standing" : "G",
+            "Year" : "3",
+            "last_Attendance_Time" : "2024-01-16 00:54:32"
+        },
+    "1005":
+        {
+            "Name" : "Raj Kumar Mehrotra",
+            "Major" : "Accounts",
+            "Starting Year" : 1991,
+            "total_attendance" : 102,
+            "Standing" : "G",
+            "Year" : "adv 5",
             "last_Attendance_Time" : "2024-01-16 00:54:32"
         }
 }

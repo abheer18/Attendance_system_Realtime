@@ -77,19 +77,13 @@ while True:
             if matches[matchIndex]  :
                 # print("known face detected")
                 # print(studentIds[matchIndex])
-                # y1, x2, y2, x1 = faceLoc
-                # y1, x2, y2, x1 = y1*4, x2*4, y2*4, x1*4
-                # blue = color = (255, 0, 0)
-                # thickness = 2
-                # bbox = 55 + x1, 162 + y1, x2-x1, y2-y1
-                # cv2.rectangle(imgBackground,bbox,  blue, thickness )
                 id = studentIds[matchIndex]
                 if counter == 0:
                     cv2.putText(imgBackground, "Loading", (400,400), cv2.FONT_HERSHEY_COMPLEX, 1, (255,255,255))
                     cv2.imshow("Face Attendance", imgBackground)
                     cv2.waitKey(1)
                     counter = 1
-                    modeType = 3
+                    modeType = 1
 
         if counter != 0:
 
@@ -115,16 +109,16 @@ while True:
                     ref.child('total_attendance').set(studentInfo['total_attendance'])
                     ref.child('last_Attendance_Time').set(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
                 else:
-                    modeType = 2
+                    modeType = 3
                     counter = 0
                     imgBackground[48:48 + 619, 811:811 + 405] = imgModeList[modeType]
 
-            if modeType != 2:
-                if 10 < counter < 20:
-                    modeType = 1
+            if modeType != 3: #if not already marked
+                if 10 < counter < 20:   #show marked
+                    modeType = 2
                 imgBackground[48:48 + 619, 811:811 + 405] = imgModeList[modeType]
 
-                if counter <= 10 :
+                if counter <= 10 : #show the student info in the mod
 
                     cv2.putText(imgBackground, str(studentInfo['total_attendance']), (900, 100),
                                 cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 255), 2)
@@ -146,17 +140,21 @@ while True:
 
                     imgStudentResized = cv2.resize(imgStudent, (220, 217))  # Note the order of dimensions
                     imgBackground[177:177 + 217, 904:904 + 220] = imgStudentResized
-                counter += 1
 
-                if counter >= 20:
-                    counter = 0
-                    modeType = 0
-                    studentInfo = []
-                    imgStudentResized = []
-                    imgBackground[48:48 + 619, 811:811 + 405] = imgModeList[modeType]
+
+            if counter >= 20:
+                modeType = 0
+                studentInfo = []
+                imgStudentResized = []
+                imgBackground[48:48 + 619, 811:811 + 405] = imgModeList[modeType]
+                counter = 0
+            counter += 1
+        print(counter)
     else:
+        print("No Face Detction -0 ")
         modeType = 0
         counter = 0
+
 
     cv2.imshow("Face Attendance", imgBackground)
     cv2.waitKey(1)
