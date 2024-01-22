@@ -48,17 +48,8 @@ data = {
             "Standing" : "G",
             "Year" : "3",
             "last_Attendance_Time" : "2024-01-16 00:54:32"
-        },
-    "1005":
-        {
-            "Name" : "Raj Kumar Mehrotra",
-            "Major" : "Accounts",
-            "Starting Year" : 1991,
-            "total_attendance" : 102,
-            "Standing" : "G",
-            "Year" : "adv 5",
-            "last_Attendance_Time" : "2024-01-16 00:54:32"
         }
+
 }
 
 for key, value in data.items():
