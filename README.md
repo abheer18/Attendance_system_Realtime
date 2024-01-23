@@ -1,4 +1,4 @@
-##**FaceTouch: Real-Time Face Attendance with Firebase Integration**
+## FaceTouch: Real-Time Face Attendance with Firebase Integration
 FaceTouch is a real-time face attendance system utilizing facial recognition and Firebase backend services. It eliminates manual attendance marking, minimizes hygiene concerns, and enhances security through accurate student identification.
 
 **Features**
