@@ -18,5 +18,5 @@ Streamlined Data Management: Access and analyze attendance data conveniently thr
 Face Recognition: Utilizes OpenCV library for high accuracy and real-time processing.
 Firebase Integration: Employs Realtime Database and Cloud Storage for secure data management.
 Python Development: Built with Python and libraries like NumPy, pickle, and datetime.
+![image](https://github.com/abheer18/Attendance_system_Realtime/assets/72267713/3a8abeb9-1078-4f73-b8ea-c5a735ab32f8)
 
-![image](https://github.com/abheer18/Attendance_system_Realtime/assets/72267713/d48002b2-aa89-4687-bae4-c6aff7b51f32)
