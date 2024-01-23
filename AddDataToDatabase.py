@@ -5,9 +5,7 @@ cred = credentials.Certificate("serviceAccountKey.json")
 firebase_admin.initialize_app(cred, {
     'databaseURL':"https://faceattendancerealtime-167bf-default-rtdb.firebaseio.com/"
 })
-
 ref = db.reference('Students')
-
 data = {
     "1002":
         {
@@ -49,8 +47,6 @@ data = {
             "Year" : "3",
             "last_Attendance_Time" : "2024-01-16 00:54:32"
         }
-
 }
-
 for key, value in data.items():
     ref.child(key).set(value)

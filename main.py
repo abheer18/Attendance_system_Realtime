@@ -9,7 +9,6 @@ from firebase_admin import db, storage
 from firebase_admin import storage
 from datetime import datetime
 
-
 cred = credentials.Certificate("serviceAccountKey.json")
 firebase_admin.initialize_app(cred, {
     'databaseURL':"https://faceattendancerealtime-167bf-default-rtdb.firebaseio.com/",
@@ -19,18 +18,14 @@ bucket = storage.bucket()
 cap = cv2.VideoCapture(0)
 cap.set(3, 640)
 cap.set(4, 480)
-
 imgBackground = cv2.imread('Resources/background.png')
-
 #Importing the mode images into a list
 folderModePath = 'Resources/Modes' #just ot tackle the different folder structure
 modePathList = os.listdir(folderModePath)  #this will get the names of all the images in the folder
 imgModeList = []
-
 for path in modePathList:
-    imgModeList.append(cv2.imread(os.path.join(folderModePath, path)))
+    imgModeList.append(cv2.imread(os.path.join(folderModePath, path))) #effectively loads multiple images from a specified directory and stores them in a list for later use within the attendance system.
 # print(len(imgModeList))
-
 #Load the Encoding file
 print("Loading Encode File....")
 file = open('EncodeFile.p', 'rb')
@@ -39,7 +34,6 @@ file.close()
 encodeListKnown, studentIds = encodeListKnownWithIds
 # print(studentIds)
 print("Encode File loaded")
-
 modeType = 0
 counter = 0
 id = -1
@@ -49,34 +43,23 @@ while True:
     success, img = cap.read()
     imgS = cv2.resize(img,(0,0), None, 0.25, 0.25)  #smallig the image to reduce the computation power
     imgS = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-
     #we need two things,
     # 1- > faces in the current frame
     # 2 -> its encoding
     faceCurFrame = face_recognition.face_locations(imgS)
     #we dont want to find the location of the whole image, we are just extracting thr faces
     encodeCurFrame = face_recognition.face_encodings(imgS, faceCurFrame)
-
     # imgBackground[167:167+480, 57:57+640] = img
     #row , col
     imgBackground[180:180 + 480, 82:82 + 640] = img
     imgBackground[48:48 + 619, 811:811 + 405] = imgModeList[modeType]
-
     if  faceCurFrame:
-
         for encodeFace, faceLoc in zip(encodeCurFrame, faceCurFrame):
             matches = face_recognition.compare_faces(encodeListKnown, encodeFace)
             #lower the distance then its a better match
             faceDis = face_recognition.face_distance(encodeListKnown, encodeFace)
-            # print("matches", matches)
-            # print("faceDis", faceDis)
-
             matchIndex = np.argmin(faceDis)
-            # print("Match Index", matchIndex)
-
             if matches[matchIndex]  :
-                # print("known face detected")
-                # print(studentIds[matchIndex])
                 id = studentIds[matchIndex]
                 if counter == 0:
                     cv2.putText(imgBackground, "Loading", (400,400), cv2.FONT_HERSHEY_COMPLEX, 1, (255,255,255))
@@ -86,7 +69,6 @@ while True:
                     modeType = 1
 
         if counter != 0:
-
             if counter == 1:
                 #get the data from database
                 studentInfo = db.reference(f'Students/{id}').get()
@@ -140,8 +122,6 @@ while True:
 
                     imgStudentResized = cv2.resize(imgStudent, (220, 217))  # Note the order of dimensions
                     imgBackground[177:177 + 217, 904:904 + 220] = imgStudentResized
-
-
             if counter >= 20:
                 modeType = 0
                 studentInfo = []
@@ -151,10 +131,8 @@ while True:
             counter += 1
         print(counter)
     else:
-        print("No Face Detction -0 ")
+        print("**No Face Detction** ")
         modeType = 0
         counter = 0
-
-
     cv2.imshow("Face Attendance", imgBackground)
     cv2.waitKey(1)
